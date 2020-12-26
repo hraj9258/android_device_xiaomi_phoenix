@@ -21,8 +21,6 @@ jobs:
           command: |
             cd ~/twrp
             source build/envsetup.sh
-            add_lunch_combo omni_phoenix-eng
-            add_lunch_combo omni_phoenix-userdebug
             export ALLOW_MISSING_DEPENDENCIES=true
             lunch omni_phoenix-eng
             mka recoveryimage
