@@ -23,7 +23,7 @@ jobs:
             source build/envsetup.sh
             export ALLOW_MISSING_DEPENDENCIES=true
             lunch omni_phoenix-eng
-            mka recoveryimage
+            mka recoveryimage-j1
 
       - run:
           name: Send To Telegram
