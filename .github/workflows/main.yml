@@ -1,4 +1,4 @@
-name: Building recovery
+name: Building TWRP recovery
 
 on:
 #  release:
@@ -20,6 +20,8 @@ env:
   DEVICE: phoenix
   DT_LINK: https://github.com/hraj9258/android_device_xiaomi_phoenix
   DT_PATH: device/xiaomi/phoenix
+  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+  CHAT_ID: ${{ secrets.CHAT_ID }}
 #  KERNEL_LINK: https://github.com/sm6150-dev/android_kernel_xiaomi_sm6150
 #  KERNEL_PATH: kernel/xiaomi/phoenix
   TARGET: recoveryimage
@@ -61,8 +63,11 @@ jobs:
               cd work
               . build/envsetup.sh &&lunch omni_$DEVICE-eng &&export ALLOW_MISSING_DEPENDENCIES=true && mka $TARGET
              
-       - name: Upload recovery image
+       - name: Uploading recovery image
          run: |
               cd work/out/target/product/$DEVICE
+              sudo zip -r9 $ZIP_NAME recovery.img 
+              curl -F chat_id=$CHAT_ID -F document=@$ZIP-NAME -F parse_mode=markdown https://api.telegram.org/bot$BOT_TOKKEN/sendDocument -F caption="TWRP-3.5.0-10 | Unofficial "
               curl -sL https://git.io/file-transfer | sh
               ./transfer wet recovery.img
+              ./transfer wet $ZIP_NAME
